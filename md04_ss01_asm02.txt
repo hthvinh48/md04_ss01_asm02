@@ -1,0 +1,34 @@
+Bảng so sánh Monolith và Microservices
+
+Tiêu chí	Monolith	Microservices
+Mở rộng	Phải nhân bản cả ứng dụng	Mở rộng riêng từng dịch vụ (ví dụ chỉ dịch vụ Thanh toán)
+Công nghệ	Một ngôn ngữ/framework chung	Mỗi team tự chọn (Java, Go...)
+Triển khai	Deploy cả khối, mỗi lần sửa phải đưa lên toàn bộ	CI/CD riêng từng dịch vụ, deploy nhanh, độc lập
+Chịu lỗi	Một lỗi có thể làm sập cả hệ thống	Lỗi bị cô lập (Fault Isolation)
+Bảo trì	Code lớn dần thành "Big Ball of Mud"	Codebase nhỏ, tập trung, người mới dễ tiếp cận
+Độ trễ	Gọi hàm trong cùng tiến trình, gần như không tốn	Gọi nhau qua mạng, cộng dồn độ trễ, có nguy cơ mất kết nối
+Dữ liệu	Một database, giao dịch đơn giản	Mỗi dịch vụ một database, khó nhất quán (cần Saga Pattern)
+Vận hành	Đơn giản: một ứng dụng để giám sát	Rất phức tạp: hàng chục/trăm dịch vụ, khó monitoring, logging
+Bảo mật	Một "cửa" cần bảo vệ	Nhiều endpoint, cần xác thực tập trung (JWT/OAuth2) và mã hóa giao tiếp nội bộ
+Kiểm thử	Test tích hợp tương đối dễ	Test luồng nghiệp vụ qua 5-7 dịch vụ rất khó
+
+Ưu điểm của Microservices
+
+Mở rộng độc lập, tiết kiệm tài nguyên.
+Linh hoạt công nghệ (Technology Agnostic).
+Triển khai nhanh, mỗi dịch vụ một quy trình CI/CD.
+Cô lập lỗi, hệ thống ít bị sập toàn bộ.
+Codebase nhỏ, dễ nắm bắt và bảo trì.
+
+Nhược điểm/Thách thức
+
+Vận hành phức tạp: quản lý, giám sát, ghi log hàng trăm dịch vụ.
+Độ trễ mạng: các dịch vụ gọi nhau qua mạng thay vì gọi hàm nội bộ.
+Dữ liệu phân tán: mỗi dịch vụ có DB riêng, đảm bảo nhất quán rất khó.
+Bảo mật: số lượng endpoint tăng, nhiều điểm có thể bị tấn công.
+Kiểm thử tích hợp: khó kiểm tra toàn bộ luồng chạy qua nhiều dịch vụ.
+Yêu cầu đội ngũ: cần năng lực cao về mạng, bảo mật, dữ liệu phân tán, DevOps.
+
+Kết luận: Microservices không phải "viên đạn bạc"
+
+Chuyển sang Microservices giống như điều hành một thành phố thay vì một ngôi nhà: mạnh mẽ nhưng khó điều khiển, và mọi lợi ích đều phải trả bằng độ phức tạp ("không có bữa trưa nào miễn phí"). Rủi ro thực tế khi "đập đi xây lại" vì chạy theo xu hướng gồm: tốn nhiều thời gian và chi phí, hệ thống cũ ngừng phát triển trong lúc viết lại, đội ngũ chưa đủ năng lực vận hành, và hiệu năng có thể còn tệ hơn do độ trễ mạng.
